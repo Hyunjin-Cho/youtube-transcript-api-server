@@ -1,5 +1,6 @@
 from youtube_transcript_api import YouTubeTranscriptApi
 from flask import Flask, request, jsonify
+import traceback
 
 app = Flask(__name__)
 
@@ -18,6 +19,7 @@ def get_transcript():
         full_text = " ".join([line['text'] for line in transcript])
         return jsonify({"transcript": full_text})
     except Exception as e:
+        print("[ERROR]", traceback.format_exc())
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
